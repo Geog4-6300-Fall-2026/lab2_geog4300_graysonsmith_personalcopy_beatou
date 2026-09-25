@@ -15,8 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Overview:**
 
-### DOES THIS WORK? ###
-
 In this lab, you'll work with point, polygon, and raster data to investigate the distribution and environmental characteristics of trees in Georgia.
 
 You'll begin with observations of two tree species collected through the iNaturalist citizen-science platform. First, you'll use these observations to calculate the number of trees of each species found in Georgia's counties. You'll then use these counts to calculate a **location quotient (LQ)**, a measure that compares the prevalence of a species in each county with its prevalence across the state as a whole.
@@ -38,6 +36,11 @@ Before you get started, you'll need to load the following packages: `tidyverse`,
 
 ```{r packages}
 # Load packages here.
+library(tidyverse)
+library(terra)
+library(sf)
+library(tmap)
+library(knitr)
 ```
 
 # Part 1: Mapping the distribution of trees
@@ -56,6 +59,13 @@ Your first task is to load these observations and convert them into a spatial po
 
 ```{r task1}
 # Code goes here.
+gatree_obs <- read_csv("data/gatree_obs_inat.csv") %>%
+  st_as_sf(coords = c("longitude", "latitude")) #Converting the csv into a spatial dataset (sf)
+
+tm_shape(gatree_obs) +
+  tm_point('gentype')
+
+?tm_point
 ```
 
 ---
