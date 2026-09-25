@@ -9,9 +9,13 @@ format:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+**Your Name: Grayson Smith**
+
 # Spatial statistics with vector and raster data
 
 **Overview:**
+
+### DOES THIS WORK? ###
 
 In this lab, you'll work with point, polygon, and raster data to investigate the distribution and environmental characteristics of trees in Georgia.
 
