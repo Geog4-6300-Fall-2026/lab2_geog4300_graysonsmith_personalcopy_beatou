@@ -63,9 +63,7 @@ gatree_obs <- read_csv("data/gatree_obs_inat.csv") %>%
   st_as_sf(coords = c("longitude", "latitude")) #Converting the csv into a spatial dataset (sf)
 
 tm_shape(gatree_obs) +
-  tm_point('gentype')
-
-?tm_point
+  tm_dots('gentype')
 ```
 
 ---
