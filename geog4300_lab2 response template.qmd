@@ -42,6 +42,7 @@ library(sf)
 library(tmap)
 library(knitr)
 library(tidycensus)
+library(dplyr)
 #library(tigris) #Not currently using, but might be helpful later
 ```
 
@@ -62,17 +63,19 @@ Your first task is to load these observations and convert them into a spatial po
 ```{r task1}
 # Code goes here.
 gatree_obs <- read_csv("data/gatree_obs_inat.csv") %>%
-  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove = FALSE) #Converting the csv into a spatial dataset (sf)
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove = FALSE)
 
 #Trying to get the states on the map
 ga_counties <- st_read("data/ACSCtyData_2022ACS_simplify.gpkg") %>% 
   st_transform(4326) %>% #This is just changing the projection
   filter(st_name == "Georgia")
 
+#Actually doing the plot
 tm_shape(ga_counties) +
-  tm_polygons(alpha=0.1) +
+  tm_polygons(fill_alpha=0.1) +
   tm_shape(gatree_obs) +
-  tm_dots('gentype')
+  tm_dots('gentype',fill.legend = tm_legend("Genotype"),size=0.2,alpha_fill=0.5) +
+  tm_title("GA Tree Types")
 ```
 
 ---
@@ -91,6 +94,15 @@ You'll then use a spatial join to determine which county contains each tree obse
 
 ```{r task2}
 # Code goes here.
+county_trees_joined <- gatree_obs %>%
+  st_join(ga_counties %>% st_transform(4326), #trying to ensure the projection is consistent
+          join=st_within)
+county_trees_joined_groupedbycty <- county_trees_joined %>%
+  select(cty_name,gentype) %>% #did this for simplicity's sake in viewing the table
+  st_drop_geometry() %>% #removed geography b/c it was breaking the pivot_wider
+  count(cty_name,gentype) %>%
+  pivot_wider(id_cols = cty_name, names_from = gentype, values_from= n, values_fill = 0) #included the values_fill to get rid of the NAs and turn them into 0s
+
 ```
 
 You should now have a dataset showing the number of observations of each species in each county.
