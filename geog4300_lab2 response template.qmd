@@ -101,7 +101,7 @@ county_trees_joined_groupedbycty <- county_trees_joined %>%
   select(cty_name,gentype) %>% #did this for simplicity's sake in viewing the table
   st_drop_geometry() %>% #removed geography b/c it was breaking the pivot_wider
   count(cty_name,gentype) %>%
-  pivot_wider(id_cols = cty_name, names_from = gentype, values_from= n, values_fill = 0) #included the values_fill to get rid of the NAs and turn them into 0s
+  pivot_wider(id_cols = cty_name, names_from = gentype, values_from= n, values_fill = 0) #included the values_fill to get rid of the NAs and turn them into 0s. 
 
 ```
 
