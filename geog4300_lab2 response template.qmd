@@ -41,6 +41,8 @@ library(terra)
 library(sf)
 library(tmap)
 library(knitr)
+library(tidycensus)
+#library(tigris) #Not currently using, but might be helpful later
 ```
 
 # Part 1: Mapping the distribution of trees
@@ -60,9 +62,16 @@ Your first task is to load these observations and convert them into a spatial po
 ```{r task1}
 # Code goes here.
 gatree_obs <- read_csv("data/gatree_obs_inat.csv") %>%
-  st_as_sf(coords = c("longitude", "latitude")) #Converting the csv into a spatial dataset (sf)
+  st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove = FALSE) #Converting the csv into a spatial dataset (sf)
 
-tm_shape(gatree_obs) +
+#Trying to get the states on the map
+ga_counties <- st_read("data/ACSCtyData_2022ACS_simplify.gpkg") %>% 
+  st_transform(4326) %>% #This is just changing the projection
+  filter(st_name == "Georgia")
+
+tm_shape(ga_counties) +
+  tm_polygons(alpha=0.1) +
+  tm_shape(gatree_obs) +
   tm_dots('gentype')
 ```
 
