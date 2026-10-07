@@ -102,7 +102,9 @@ county_trees_joined_groupedbycty <- county_trees_joined %>%
   st_drop_geometry() %>% #removed geography b/c it was breaking the pivot_wider
   count(cty_name,gentype) %>%
   filter(cty_name != 'N/A') %>%
-  pivot_wider(id_cols = cty_name, names_from = gentype, values_from= n, values_fill = 0) #included the values_fill to get rid of the NAs and turn them into 0s. 
+  pivot_wider(id_cols = cty_name, names_from = gentype, values_from= n, values_fill = 0) %>% #included the values_fill to get rid of the NAs and turn them into 0s. 
+  left_join(ga_counties,by='cty_name') %>%
+  st_as_sf()
 
 ```
 
@@ -154,8 +156,6 @@ liveoak_area_ratio <- total_liveoak/complete_total_trees * 100
 county_trees_joined_groupedbycty_totaltrees_lolq <- county_trees_joined_groupedbycty_totaltrees %>%
   mutate(liveoak_cty_pct=`Live oak`/Total_Trees_per_Cty*100) %>%
   mutate(LQ_Live_Oak = liveoak_cty_pct/liveoak_area_ratio)
-
-
 ```
 
 Now map your LQ values.
@@ -166,11 +166,13 @@ Now map your LQ values.
 
 ```{r task5_map}
 # Code goes here.
+tm_shape(county_trees_joined_groupedbycty_totaltrees_lolq)+
+  tm_polygons("LQ_Live_Oak")
 ```
 
 **Your response:**
 
-{Your response goes here.}
+It appears that the highest concentrations of Live Oak trees is overwhemingly in southeastern and southern GA, especially with proximity to the GA Coast. On the other hand, there are much lower values elsewhere, especially with northward and westward extent (i.e., as you get into the Piedmont and more mountainous parts of GA). It will be very interesting to see if a certain temperature pattern aligns with this Live Oak distribution. 
 
 # Part 2: Trees and temperature in Georgia
 
