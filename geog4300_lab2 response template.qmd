@@ -146,6 +146,16 @@ First, calculate the statewide proportion of observations that are live oak. The
 
 ```{r task4}
 # Code goes here.
+#Calculating for the area ratio of Live Oaks, also needed to calcualte an actual complete total for all trees (by adding together the total by county, as calculated in Task 3)
+total_liveoak <- sum(county_trees_joined_groupedbycty_totaltrees$`Live oak`)
+complete_total_trees <- sum(county_trees_joined_groupedbycty_totaltrees$Total_Trees_per_Cty)
+liveoak_area_ratio <- total_liveoak/complete_total_trees * 100
+
+county_trees_joined_groupedbycty_totaltrees_lolq <- county_trees_joined_groupedbycty_totaltrees %>%
+  mutate(liveoak_cty_pct=`Live oak`/Total_Trees_per_Cty*100) %>%
+  mutate(LQ_Live_Oak = liveoak_cty_pct/liveoak_area_ratio)
+
+
 ```
 
 Now map your LQ values.
