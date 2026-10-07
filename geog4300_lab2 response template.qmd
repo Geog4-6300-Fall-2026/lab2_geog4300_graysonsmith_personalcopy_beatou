@@ -101,6 +101,7 @@ county_trees_joined_groupedbycty <- county_trees_joined %>%
   select(cty_name,gentype) %>% #did this for simplicity's sake in viewing the table
   st_drop_geometry() %>% #removed geography b/c it was breaking the pivot_wider
   count(cty_name,gentype) %>%
+  filter(cty_name != 'N/A') %>%
   pivot_wider(id_cols = cty_name, names_from = gentype, values_from= n, values_fill = 0) #included the values_fill to get rid of the NAs and turn them into 0s. 
 
 ```
@@ -123,6 +124,10 @@ Your next step is to calculate the **total number of tree observations** in each
 
 ```{r task3}
 # Code goes here.
+totaltrees <- county_trees_joined_groupedbycty$Dogwood + county_trees_joined_groupedbycty$`Live oak` + county_trees_joined_groupedbycty$Pecan + county_trees_joined_groupedbycty$Rhododendron
+
+county_trees_joined_groupedbycty_totaltrees <- county_trees_joined_groupedbycty %>%
+  mutate(Total_Trees_per_Cty = totaltrees)
 ```
 
 ## Calculating a location quotient
