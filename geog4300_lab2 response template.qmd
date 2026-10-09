@@ -194,15 +194,11 @@ You should see this raster in the data folder of this lab repository. Load it us
 
 ```{r task6}
 # Code goes here.
-temprast_07012024 <- rast("data/temp_july2022_2024/temperature_2m_2024-07-01.tif")
+temprast_07012024_k <- rast("data/temp_july2022_2024/temperature_2m_2024-07-01.tif")
 
-temp_1950<-rast(temp1950_files)
+temprast_07012024_c <- (temprast_07012024_k - 273.15) #Doing the temp conversion; this can evidently be automaticaly done using a simple operator throughout the raster
 
-temp2022_files<-list.files("data/era5_temperature/temp_july2022_2024",
-                     pattern=".tif",
-                     full.names=T)
-
-temp_2022<-rast(temp2022_files)
+plot(temprast_07012024_c, main="ERA5 Temp Data (°C) for 2024-07-01",xlab="longitude",ylab="latitude")
 
 ```
 
@@ -218,6 +214,17 @@ Use `nlyr()` to confirm how many raster layers you have loaded.
 
 ```{r task7}
 # Code goes here.
+temps_july2022_2024_list_k <- list.files("data/temp_july2022_2024",
+                     pattern=".tif",
+                     full.names=T)
+
+temps_july2022_2024_list_rast_k <- rast(temps_july2022_2024_list_k) #Making the list into a raster object so it can be manipulated using the math operator performed in Task 6. 
+
+temps_july2022_2024_list_c <- temps_july2022_2024_list_rast_k - 273.15
+
+mean_july_temps_raster_2022_2024 <- mean(temps_july2022_2024_list_c)
+nlyr(temps_july2022_2024_list_c)
+
 ```
 
 You now have a raster representing the mean July temperature across the study period.
