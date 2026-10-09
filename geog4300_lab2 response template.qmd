@@ -237,6 +237,7 @@ Next, use `terra::extract()` to obtain the temperature value at the location of 
 
 ```{r task8}
 # Code goes here.
+
 ```
 
 You can now calculate summary statistics for the two tree species.
