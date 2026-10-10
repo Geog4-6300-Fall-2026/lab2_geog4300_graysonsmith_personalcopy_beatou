@@ -166,8 +166,9 @@ Now map your LQ values.
 
 ```{r task5_map}
 # Code goes here.
-tm_shape(county_trees_joined_groupedbycty_totaltrees_lolq)+
-  tm_polygons("LQ_Live_Oak")
+tm_shape(county_trees_joined_groupedbycty_totaltrees_lolq) +
+  tm_polygons("LQ_Live_Oak") +
+  tm_title("Location Quotient for Live Oak Trees")
 ```
 
 **Your response:**
@@ -237,7 +238,20 @@ Next, use `terra::extract()` to obtain the temperature value at the location of 
 
 ```{r task8}
 # Code goes here.
+temps_and_trees_extract1 <- terra::extract(temps_july2022_2024_list_c,county_trees_joined) #NOTE: The raster must always come first in the arguments here; decided to go with the original tree dataset here since we are just examining the tree obs themselves, and no additional variables
 
+temps_and_trees_extract_mean <- rowMeans(temps_and_trees_extract1[,2:93]) #Had to do some looking/asking for this; evidently rowMeans calculates the average down the row, which gives me one single mean July temp (over the three studied years) that I can then tether back to the tree dataset. I tried other methods using dplyr, and I was not successful. 
+
+county_trees_joined$mean_temp<-as.character(temps_and_trees_extract_mean)
+
+trimmed_county_trees_joined_temp <- county_trees_joined %>%
+  select(gentype,mean_temp,longitude,latitude,geometry) #Did this to cut down on all the tree data that is not necessarily important to examining the relationship between temp and tree observation (like time observed, etc.) and to simplify the kable() below. Evidently, the geometry is maintained when this is done (perhaps because this is an sf object); however, I chose to explicitly include it in the select() anyway (to be safe). 
+
+corr_trimmed_county_trees_joined_temp <- trimmed_county_trees_joined_temp %>%
+  mutate(num_mean_temp = as.numeric(mean_temp)) %>%
+  select(-mean_temp) #Had to do this to get the mean_temp back into numeric form so I could work with it using the summary() functions below
+
+kable(corr_trimmed_county_trees_joined_temp)
 ```
 
 You can now calculate summary statistics for the two tree species.
@@ -257,6 +271,11 @@ The mean longitude and latitude provide a simple measure of the **mean center** 
 
 ```{r task9}
 # Code goes here.
+summary_stats_trees_temp <- corr_trimmed_county_trees_joined_temp %>%
+  group_by(gentype) %>%
+  summarise(gentype_mean_temp = mean(num_mean_temp, na.rm = TRUE), gentype_mean_long = mean(longitude), gentype_mean_lat = mean(latitude),gentype_sd_temp = sd(num_mean_temp,na.rm = TRUE)) #Had to include the na.rm because there were very isolated N/As in the temp data for some reason. 
+
+kable(summary_stats_trees_temp)
 ```
 
 ### Task 10
