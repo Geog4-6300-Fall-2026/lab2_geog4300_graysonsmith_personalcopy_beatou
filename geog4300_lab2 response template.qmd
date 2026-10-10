@@ -284,7 +284,11 @@ kable(summary_stats_trees_temp)
 
 **Your response:**
 
-{Your response goes here.}
+These data indicate to me the pattern I would generally expect to see temperature-wise, specifically that the tree species that are generally located further to the north (like the rhododendron) exhibit lower mean temperatures than those located further south (like the mostly coastal live oak genotype). This certianly makes sense, given that southern GA can typically experiences warmer overall temperatures than northern GA (at least on average) At the same time, the two genotypes with a more central tendency within GA (in terms of north and south orientation, specifically Dogwood and Pecan) both have intermediate (and very similar) mean temperature values -- which again is somewhat expected, given that they are (on average) located in generally the same region (i.e., the GA Piedmont). 
+
+In terms of general geographic distribution, the mean lat and long values found here generally agree with those values that can be visually extrapolated from the map we produced for Task 1. 
+
+In terms of interesting similarities and differences, I found the patterns demonstrated here to be somewhat expected -- as explained above. However, I do find the differences in temperature standard deviation quite interesting. Althoug none of the values are exceptionally high, I do find it very interesting that the standard deviation is (comparatively) very low for live oak trees and (comparatively) higher for the remaining tree types (especially the rhododendron). This could possibly be explained by the fact that the live oak tree's primarily coastal location experiences less year-to-year temperature fluctuation due to proximity to the coast and distance from any features that might typically bring cooler weather (like a weak summer wedge in north GA, or something similar). On the contrary, the remaining tree types (again, especially rhododendrons)  are located further north in the state, and thus might experience more temperature fluctuations (in July, and in most months) due to the higher likelihood of impacts from weak summer cold fronts or wedge systems. There are likely additional reasons for these differences in SD; however, the relationship (and its possible explanation) are very interesting. 
 
 # Lab challenge
 
