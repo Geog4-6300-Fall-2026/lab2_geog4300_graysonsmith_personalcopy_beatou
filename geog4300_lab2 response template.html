@@ -227,7 +227,7 @@ date  (1): observed_on
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Trying to get the states on the map</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Trying to get the counties on the map</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ga_counties <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/ACSCtyData_2022ACS_simplify.gpkg"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span> <span class="co">#This is just changing the projection</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(st_name <span class="sc">==</span> <span class="st">"Georgia"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -263,6 +263,7 @@ Geodetic CRS:  WGS 84</code></pre>
 <p>Load the county data from:</p>
 <p><code>ACSCtyData_2022ACS_simplify.gpkg</code></p>
 <p>You’ll then use a spatial join to determine which county contains each tree observation.</p>
+<p><em>NOTE:</em> This should be completed in Task 1, where I attempted to load in the counties for visualization purposes.</p>
 </section>
 <section id="task-2" class="level3">
 <h3 class="anchored" data-anchor-id="task-2">Task 2</h3>
