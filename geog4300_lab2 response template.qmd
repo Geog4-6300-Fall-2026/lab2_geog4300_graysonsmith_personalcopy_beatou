@@ -65,7 +65,7 @@ Your first task is to load these observations and convert them into a spatial po
 gatree_obs <- read_csv("data/gatree_obs_inat.csv") %>%
   st_as_sf(coords = c("longitude", "latitude"), crs=4326, remove = FALSE)
 
-#Trying to get the states on the map
+#Trying to get the counties on the map
 ga_counties <- st_read("data/ACSCtyData_2022ACS_simplify.gpkg") %>% 
   st_transform(4326) %>% #This is just changing the projection
   filter(st_name == "Georgia")
@@ -87,6 +87,8 @@ Load the county data from:
 `ACSCtyData_2022ACS_simplify.gpkg`
 
 You'll then use a spatial join to determine which county contains each tree observation.
+
+*NOTE:* This should be completed in Task 1, where I attempted to load in the counties for visualization purposes. 
 
 ### Task 2
 
